@@ -4,10 +4,13 @@ import { useState, useEffect } from "react";
 import { SearchFilters } from "@/components/SearchFilters";
 import { PropertyGrid } from "@/components/PropertyGrid";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
 import type { Property } from "@/types";
-import { Home } from "lucide-react";
+import { Home, Calendar } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function HomePage() {
+  const router = useRouter();
   const [properties, setProperties] = useState<Property[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
@@ -55,9 +58,19 @@ export default function HomePage() {
       {/* Header */}
       <header className="border-b sticky top-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-50">
         <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center gap-2">
-            <Home className="h-8 w-8" />
-            <h1 className="text-2xl font-bold">HomeStay</h1>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Home className="h-8 w-8" />
+              <h1 className="text-2xl font-bold">HomeStay</h1>
+            </div>
+            <Button 
+              variant="outline" 
+              onClick={() => router.push("/bookings")}
+              className="flex items-center gap-2"
+            >
+              <Calendar className="h-4 w-4" />
+              My Bookings
+            </Button>
           </div>
         </div>
       </header>
