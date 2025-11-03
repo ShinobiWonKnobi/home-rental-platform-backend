@@ -7,6 +7,8 @@ import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ImageGallery } from "@/components/ImageGallery";
 import { BookingForm } from "@/components/BookingForm";
+import { ReviewsSection } from "@/components/ReviewsSection";
+import { WishlistButton } from "@/components/WishlistButton";
 
 async function getProperty(id: string) {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/properties/${id}`, {
@@ -50,17 +52,22 @@ export default async function PropertyPage({ params }: { params: Promise<{ id: s
 
       <div className="container mx-auto px-4 py-8">
         <div className="mb-6">
-          <h1 className="text-3xl font-bold mb-2">{property.title}</h1>
-          <div className="flex items-center gap-4 text-sm">
-            <div className="flex items-center gap-1">
-              <Star className="h-4 w-4 fill-black" />
-              <span className="font-semibold">{property.rating}</span>
-              <span className="text-muted-foreground">({property.reviews} reviews)</span>
+          <div className="flex items-start justify-between">
+            <div className="flex-1">
+              <h1 className="text-3xl font-bold mb-2">{property.title}</h1>
+              <div className="flex items-center gap-4 text-sm">
+                <div className="flex items-center gap-1">
+                  <Star className="h-4 w-4 fill-black" />
+                  <span className="font-semibold">{property.rating}</span>
+                  <span className="text-muted-foreground">({property.reviews} reviews)</span>
+                </div>
+                <div className="flex items-center gap-1 text-muted-foreground">
+                  <MapPin className="h-4 w-4" />
+                  <span>{property.location}</span>
+                </div>
+              </div>
             </div>
-            <div className="flex items-center gap-1 text-muted-foreground">
-              <MapPin className="h-4 w-4" />
-              <span>{property.location}</span>
-            </div>
+            <WishlistButton propertyId={property.id} size="lg" />
           </div>
         </div>
 
@@ -116,6 +123,10 @@ export default async function PropertyPage({ params }: { params: Promise<{ id: s
                 })}
               </div>
             </div>
+
+            <Separator />
+
+            <ReviewsSection propertyId={property.id} />
           </div>
 
           <div className="lg:col-span-1">
